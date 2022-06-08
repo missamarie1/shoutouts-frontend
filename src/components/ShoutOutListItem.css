@@ -1,0 +1,9 @@
+.ShoutOutListItem .from-container {
+  display: flex;
+}
+
+.ShoutOutListItem .from-img {
+  border-radius: 50%;
+  height: 30px;
+  width: 30px;
+}
