@@ -1,5 +1,5 @@
 import axios from "axios";
-import ShoutOut from "../models/Shoutout";
+import ShoutOut, { User } from "../models/Shoutout";
 import Shoutout from "../models/Shoutout";
 
 const baseUrl = process.env.REACT_APP_API_URL || "";
@@ -26,4 +26,8 @@ export const postNewShoutOut = (shoutoutBody: ShoutOut): Promise<void> => {
 
 export const deleteShoutout = (id: string): Promise<void> => {
   return axios.delete(`${baseUrl}/${id}`);
+};
+
+export const upvoteShoutout = (user: User, id: string): Promise<void> => {
+  return axios.put(`${baseUrl}/upvote/${id}`, user).then((res) => res.data);
 };

@@ -3,28 +3,43 @@ import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import { signInWithGoogle, signOut } from "../firebaseConfig";
 import "./Header.css";
+import logo from "../assets/GC.gif";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
   return (
     <header className="Header">
       <h1>
-        <Link to="/">GC Shoutouts</Link>
+        <Link to="/" className="header-h1">
+          <img src={logo} alt="Grand Circus Shoutouts" className="logo" />
+        </Link>
       </h1>
       {/* user info */}
       {/* <pre>{JSON.stringify(user, null, 2)}</pre> */}
 
       {user ? (
-        <>
-          <button onClick={signOut}>Sign Out</button>
-          <p>Welcome {user?.displayName}</p>{" "}
-          <img src={user.photoURL!} alt="profile picture" />
+        <div className="profile-section">
+          <p className="welcome">
+            Welcome, <span className="user-name">{user?.displayName}</span>
+          </p>{" "}
+          <img
+            src={user.photoURL!}
+            alt="profile picture"
+            className="profile-pic"
+          />
           <p>
-            <Link to="/me">See my shoutouts!</Link>
+            <Link to="/me" className="my-shoutouts">
+              View your shoutouts!
+            </Link>
           </p>
-        </>
+          <button onClick={signOut} className="log">
+            Sign Out
+          </button>
+        </div>
       ) : (
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <button onClick={signInWithGoogle} className="log sign-in">
+          Sign in with Google
+        </button>
       )}
     </header>
   );

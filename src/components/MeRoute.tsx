@@ -1,8 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import ShoutOut from "../models/Shoutout";
-import { getAllShoutoutsToFromMe } from "../services/ShoutoutService";
+import ShoutOut, { User } from "../models/Shoutout";
+import {
+  getAllShoutoutsToFromMe,
+  upvoteShoutout,
+} from "../services/ShoutoutService";
 import "./MeRoute.css";
 import ShoutOutListItem from "./ShoutOutListItem";
 
@@ -19,6 +22,13 @@ const MeRoute = () => {
       navigate("/");
     }
   }, [user]);
+  const upvoteHandler = (user: User, id: string): void => {
+    upvoteShoutout(user, id).then(() => {
+      getAllShoutoutsToFromMe(user?.displayName || "Anonymous").then((res) =>
+        setMyShoutouts(res)
+      );
+    });
+  };
   return (
     <div className="MeRoute">
       <ul>
@@ -27,6 +37,7 @@ const MeRoute = () => {
             key={item._id}
             shoutOut={item}
             deleteHandler={() => {}}
+            upvoteHandler={upvoteHandler}
           />
         ))}
       </ul>

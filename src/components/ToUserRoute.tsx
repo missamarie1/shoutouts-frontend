@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import ShoutOut from "../models/Shoutout";
+import ShoutOut, { User } from "../models/Shoutout";
 import {
   deleteShoutout,
   getAllShoutOutsToUser,
   postNewShoutOut,
+  upvoteShoutout,
 } from "../services/ShoutoutService";
 import ShoutOutForm from "./ShoutOutForm";
 import ShoutOutListItem from "./ShoutOutListItem";
@@ -35,6 +36,13 @@ const ToUserRoute = () => {
       });
     });
   };
+  const upvoteHandler = (user: User, id: string): void => {
+    upvoteShoutout(user, id).then(() => {
+      getAllShoutOutsToUser(to).then((res) => {
+        setUsersShoutouts(res);
+      });
+    });
+  };
   return (
     <div className="ToUserRoute">
       <h2>All Shoutouts to: {to}</h2>
@@ -44,6 +52,7 @@ const ToUserRoute = () => {
             key={item._id}
             shoutOut={item}
             deleteHandler={deleteHandler}
+            upvoteHandler={upvoteHandler}
           />
         ))}
       </ul>

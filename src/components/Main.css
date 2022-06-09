@@ -1,0 +1,8 @@
+.Main .please-sign-in {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #4257cc;
+  font-weight: 600;
+}

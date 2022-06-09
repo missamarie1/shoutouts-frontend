@@ -1,33 +1,88 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import ShoutOutModel from "../models/Shoutout";
+import AuthContext from "../context/AuthContext";
+import ShoutOutModel, { User } from "../models/Shoutout";
+import { upvoteShoutout } from "../services/ShoutoutService";
 import "./ShoutOutListItem.css";
 
 interface Props {
   shoutOut: ShoutOutModel;
   deleteHandler: (id: string) => void;
+  upvoteHandler: (user: User, id: string) => void;
 }
 
-const ShoutOutListItem = ({ shoutOut, deleteHandler }: Props) => {
+const ShoutOutListItem = ({
+  shoutOut,
+  deleteHandler,
+  upvoteHandler,
+}: Props) => {
+  const { user } = useContext(AuthContext);
   return (
     <li className="ShoutOutListItem">
-      <button onClick={() => deleteHandler(shoutOut?._id!)}>x</button>
-      <p>
-        <Link to={`/user/${shoutOut.to}`}> To: {shoutOut.to}</Link>
-      </p>
-      <div className="from-container">
-        <p>From: </p>
-        {shoutOut.photoUrl && (
+      <div className="info">
+        <button onClick={() => deleteHandler(shoutOut?._id!)}>
+          <i className="fa-solid fa-trash-can"></i>
+        </button>
+        <p className={`${shoutOut.to === user?.displayName ? "me" : ""} `}>
+          To:
+          <Link to={`/user/${shoutOut.to}`}>
+            {" "}
+            {""}
+            {shoutOut.to}
+          </Link>
+        </p>
+
+        <div className="from-container">
+          <p className="from">From:</p>
+
+          {shoutOut.photoUrl && (
+            <img
+              src={shoutOut.photoUrl}
+              alt={shoutOut.from}
+              className="from-img"
+            />
+          )}
+          <p className={`${shoutOut.from === user?.displayName ? "me" : ""} `}>
+            {shoutOut.from}
+          </p>
+        </div>
+      </div>
+      <div className="message">
+        <p>"{shoutOut.text}"</p>
+        {shoutOut.image && (
           <img
-            src={shoutOut.photoUrl}
-            alt={shoutOut.from}
-            className="from-img"
+            src={shoutOut.image}
+            alt={shoutOut.text}
+            className="shoutout-img"
           />
         )}
-        <p>{shoutOut.from}</p>
       </div>
-      <p>"{shoutOut.text}"</p>
+      {user ? (
+        <div className="votes-container">
+          <button>downvote</button>
+          <p>{shoutOut.likes ? shoutOut.likes?.length : "0"} likes</p>
+          <button
+            onClick={() =>
+              upvoteHandler(
+                { displayName: user.displayName || "anonymous", uid: user.uid },
+                shoutOut._id!
+              )
+            }
+          >
+            upvote
+          </button>
+        </div>
+      ) : (
+        <div>
+          <p>TODO</p>
+          <p>Please log in to upvote / downvote</p>
+        </div>
+      )}
     </li>
   );
 };
 
 export default ShoutOutListItem;
+function displayName(displayName: any): void {
+  throw new Error("Function not implemented.");
+}
