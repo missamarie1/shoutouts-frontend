@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import ShoutOutModel, { User } from "../models/Shoutout";
-
 import "./ShoutOutListItem.css";
 
 interface Props {
@@ -83,6 +82,3 @@ const ShoutOutListItem = ({
 };
 
 export default ShoutOutListItem;
-function displayName(displayName: any): void {
-  throw new Error("Function not implemented.");
-}
