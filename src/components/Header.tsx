@@ -22,11 +22,7 @@ const Header = () => {
           <p className="welcome">
             Welcome, <span className="user-name">{user?.displayName}</span>
           </p>{" "}
-          <img
-            src={user.photoURL!}
-            alt="profile picture"
-            className="profile-pic"
-          />
+          <img src={user.photoURL!} alt="profile" className="profile-pic" />
           <p>
             <Link to="/me" className="my-shoutouts">
               View your shoutouts!

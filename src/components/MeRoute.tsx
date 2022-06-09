@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import ShoutOut, { User } from "../models/Shoutout";
 import {
@@ -21,7 +21,7 @@ const MeRoute = () => {
     } else {
       navigate("/");
     }
-  }, [user]);
+  }, [user, navigate]);
   const upvoteHandler = (user: User, id: string): void => {
     upvoteShoutout(user, id).then(() => {
       getAllShoutoutsToFromMe(user?.displayName || "Anonymous").then((res) =>

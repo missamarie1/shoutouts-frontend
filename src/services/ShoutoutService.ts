@@ -1,6 +1,5 @@
 import axios from "axios";
 import ShoutOut, { User } from "../models/Shoutout";
-import Shoutout from "../models/Shoutout";
 
 const baseUrl = process.env.REACT_APP_API_URL || "";
 

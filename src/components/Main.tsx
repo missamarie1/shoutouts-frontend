@@ -58,6 +58,3 @@ const Main = () => {
 };
 
 export default Main;
-function id(arg0: { displayName: string; uid: string }, id: any) {
-  throw new Error("Function not implemented.");
-}
