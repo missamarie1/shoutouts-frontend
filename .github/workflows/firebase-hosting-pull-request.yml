@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: npm ci && npm run build
         env:
-          REACT_APP_API_URL: "${{sectrets.API_URL}}"
+          REACT_APP_API_URL: "${{secrets.API_URL}}"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
